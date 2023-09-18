@@ -15,7 +15,7 @@ const install = async () => {
     console.log('-----------------开始执行初始化example--------------------');
     const projectPackageJSON = await fs.readJson(paths.projectPackage);
     console.log('1.初始化example文件夹');
-    await fs.emptyDir(paths.exampleDir);
+    await fs.remove(paths.exampleDir);
     console.log('2.确认项目已经安装必要包的版本');
     const versions = await (async () => {
         try {
@@ -39,25 +39,27 @@ const install = async () => {
     console.log('3.检查项目依赖');
     const taroVersion = versions['@tarojs/taro'];
     console.log(`当前Taro版本${taroVersion}`);
-    const packageLinks = [], installPackages = [];
+
+    const packageNameToLink = (packageName) => {
+        return {
+            name: packageName,
+            version: `file:${path.relative(paths.exampleDir, paths.projectDir).split(path.sep).join('/')}/${packageName}`
+        }
+    };
+
+    const packageLinks = MUST_PACKAGES.map(packageNameToLink), installPackages = [];
     await Promise.all(TARO_PACKAGES.map(async (packageName) => {
         if (!await fs.exists(path.resolve(paths.projectNodeModules, packageName, 'package.json'))) {
             installPackages.push(`${packageName}@${taroVersion}`);
         } else {
-            packageLinks.push({
-                name: packageName,
-                version: `file:${path.relative(paths.exampleDir, paths.projectDir).split(path.sep).join('/')}/${packageName}`
-            });
+            packageLinks.push(packageNameToLink(packageName));
         }
     }));
     await Promise.all(ENSURE_PACKAGES.map(async (packageName) => {
         if (!await fs.exists(path.resolve(paths.projectNodeModules, packageName, 'package.json'))) {
             installPackages.push(packageName);
         } else {
-            packageLinks.push({
-                name: packageName,
-                version: `file:${path.relative(paths.exampleDir, paths.projectDir).split(path.sep).join('/')}/${packageName}`
-            });
+            packageLinks.push(packageNameToLink(packageName));
         }
     }));
     console.log(`需要安装：${installPackages.join(',')}，项目已安装需要软连接:${packageLinks.map(({name}) => name).join(',')}`);
@@ -84,7 +86,7 @@ const install = async () => {
         stdio: 'inherit', cwd: paths.dotExampleDir
     });
     console.log('5.创建example软连接');
-    await fs.ensureSymlink(paths.dotExampleDir, paths.exampleDir);
+    await fs.ensureSymlink(paths.dotExampleDir, paths.exampleDir, 'dir');
     console.log('-----------------初始化example完成--------------------');
 };
 
