@@ -2,6 +2,7 @@ import './assets/font/iconfont.css';
 import '@kne/antd-taro/dist/index.css';
 import '@kne/react-form-antd-taro/dist/index.css';
 import '@kne/mini-core/dist/index.css';
+import './project-preset';
 import axios from 'axios';
 import {preset as fetchPreset} from '@kne/react-fetch';
 import {Empty, Result} from '@kne/antd-taro';
@@ -29,7 +30,7 @@ ajax.interceptors.request.use(async config => {
 
 fetchPreset({
     ajax,
-    loading: <CommonLoadingView />,
+    loading: <CommonLoadingView/>,
     error: (err) => <Result status="error" title={err || "请求发生错误"}/>,
     empty: <Empty/>,
     transformResponse: (response) => {
