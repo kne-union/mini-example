@@ -1,6 +1,6 @@
 {
   "name": "@kne/mini-example",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "初始化小程序示例程序",
   "bin": {
     "mini-example": "./bin.js"
@@ -8,6 +8,7 @@
   "files": [
     "temp",
     "bin.js",
+    "readmeParse.js",
     "generator.js",
     "install.js",
     "paths.js"
