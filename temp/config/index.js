@@ -1,12 +1,22 @@
+const fs = require('fs');
+
+const alias = {
+    'lodash': '@kne/lodash-wechat', 'components-doc': require.resolve('../components-doc.js')
+};
+
+if (fs.existsSync("../../dist/index.css")) {
+    alias["<%=name%>/dist/index.css"] = require.resolve("../../dist/index.css");
+}
+
+if (fs.existsSync("../../dist/index.modern.js")) {
+    alias["<%=name%>"] = require.resolve("../../dist/index.modern.js");
+}
+
+
 const config = {
     projectName: 'example', date: '2023-6-29', designWidth: 750, deviceRatio: {
         640: 2.34 / 2, 750: 1, 828: 1.81 / 2
-    }, sourceRoot: 'src', outputRoot: 'dist', plugins: ['@tarojs/plugin-http'], defineConstants: {}, alias: {
-        'lodash': '@kne/lodash-wechat',
-        '@kne/mini-core/dist/index.css': require.resolve("../../dist/index.css"),
-        '@kne/mini-core': require.resolve("../../dist/index.modern.js"),
-        'components-doc': require.resolve('../components-doc.js')
-    }, copy: {
+    }, sourceRoot: 'src', outputRoot: 'dist', plugins: ['@tarojs/plugin-http'], defineConstants: {}, alias, copy: {
         patterns: [], options: {}
     }, framework: 'react', compiler: 'webpack5', cache: {
         enable: true // Webpack 持久化缓存配置，建议开启。默认配置请参考：https://docs.taro.zone/docs/config-detail#cache

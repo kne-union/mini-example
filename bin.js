@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 const install = require('./install');
+const readmeParse = require('./readmeParse');
 
 process.on('unhandledRejection', err => {
     throw err;
@@ -12,10 +13,21 @@ const scriptIndex = args.findIndex(x => x === 'install' || x === 'start' || x ==
 const script = scriptIndex === -1 ? args[0] : args[scriptIndex];
 const nodeArgs = scriptIndex > 0 ? args.slice(0, scriptIndex) : [];
 
-if (['install', 'start', 'build'].includes(script)) {
-    install().catch((e)=>{
+if (script === 'install') {
+    install().catch((e) => {
         console.error(e);
     });
-} else {
-    console.log('未知的命令 "' + script + '".');
+    return;
 }
+
+if (script === 'start') {
+    readmeParse.start();
+    return;
+}
+
+if (script === 'build') {
+    readmeParse.build();
+    return;
+}
+
+console.log('未知的命令 "' + script + '".');

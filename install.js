@@ -7,7 +7,7 @@ const spawn = require("cross-spawn-promise");
 
 const MUST_PACKAGES = ['@tarojs/taro', 'react'];
 
-const ENSURE_PACKAGES = ['@babel/runtime', '@kne/lodash-wechat', '@kne/antd-taro', '@kne/mini-core'];
+const ENSURE_PACKAGES = ['@babel/runtime', '@kne/lodash-wechat', '@kne/antd-taro', '@kne/mini-core', '@kne/react-fetch'];
 
 const TARO_PACKAGES = ['@tarojs/helper', '@tarojs/plugin-framework-react', '@tarojs/plugin-platform-weapp', '@tarojs/react', '@tarojs/runtime', '@tarojs/shared', '@tarojs/cli', '@tarojs/mini-runner', '@tarojs/plugin-http', '@tarojs/taro-loader', '@tarojs/webpack5-runner', 'babel-preset-taro', 'eslint-config-taro'];
 
@@ -43,7 +43,7 @@ const install = async () => {
     const packageNameToLink = (packageName) => {
         return {
             name: packageName,
-            version: `file:${path.relative(paths.exampleDir, paths.projectDir).split(path.sep).join('/')}/${packageName}`
+            version: `file:${path.relative(paths.exampleDir, paths.projectNodeModules).split(path.sep).join('/')}/${packageName}`
         }
     };
 
@@ -79,14 +79,14 @@ const install = async () => {
         console.log('当前项目存在自定义模板，执行自定义模板覆盖');
         await applyTemplate(path.resolve(paths.projectDir, 'temp'), paths.dotExampleDir, tempOptions);
     }
-
-    console.log('执行额外包安装');
-    await spawn("npm", ["i", '--legacy-peer-deps'], {stdio: 'inherit', cwd: paths.dotExampleDir});
+    console.log('5.部署example目录');
+    await fs.copy(paths.dotExampleDir, paths.exampleDir);
+    await fs.remove(paths.dotExampleDir);
+    console.log('6.执行额外包安装');
+    await spawn("npm", ["i", '--legacy-peer-deps'], {stdio: 'inherit', cwd: paths.exampleDir});
     await spawn("npm", ["i", '--legacy-peer-deps', '--save', ...installPackages], {
-        stdio: 'inherit', cwd: paths.dotExampleDir
+        stdio: 'inherit', cwd: paths.exampleDir
     });
-    console.log('5.创建example软连接');
-    await fs.ensureSymlink(paths.dotExampleDir, paths.exampleDir, 'dir');
     console.log('-----------------初始化example完成--------------------');
 };
 
