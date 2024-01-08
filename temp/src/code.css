@@ -10,14 +10,14 @@
     text-shadow: 0 1px white;
     font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
     font-size: 1em;
-    text-align: left;
-    white-space: pre;
-    word-spacing: normal;
-    word-break: normal;
-    word-wrap: normal;
+    text-align: left!important;
+    white-space: pre!important;
+    word-spacing: normal!important;
+    word-break: normal!important;
+    word-wrap: normal!important;
     line-height: 1.5;
     tab-size: 4;
-    hyphens: none;
+    hyphens: none!important;
 }
 
 /* Code blocks */
