@@ -29,6 +29,8 @@
 
 [class*="language-"] {
     background: #f6f8fa;
+    box-sizing: border-box;
+    display: block;
 }
 
 .token.comment,
