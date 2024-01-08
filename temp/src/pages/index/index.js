@@ -8,12 +8,15 @@ import Prism from 'prismjs';
 import 'prismjs/components/prism-json';
 import 'prismjs/components/prism-bash';
 import 'prismjs/components/prism-css';
-import 'prismjs/components/prism-jsx';
+import 'prismjs/components/prism-js-extras';
 
 const escapeMd = (html) => {
     let target = escape2Html(html);
     ['js', 'jsx', 'json', 'shell', 'css'].forEach((codeType) => {
         let type = codeType;
+        if (type === 'jsx') {
+            type = 'js';
+        }
         if (!Prism.languages[type]) {
             type = 'txt';
         }
