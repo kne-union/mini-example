@@ -1,6 +1,6 @@
 export default defineAppConfig({
     "lazyCodeLoading": "requiredComponents",
-    pages: ['pages/index/index', 'pages/components/index', 'pages/detail/index'],
+    pages: ['pages/index/index', 'pages/components/index', 'pages/detail/index', 'pages/blog/index', 'pages/blog/detail', 'pages/about/index'],
     window: {
         backgroundTextStyle: 'light',
         navigationBarBackgroundColor: '#fff',
@@ -13,6 +13,10 @@ export default defineAppConfig({
             pagePath: 'pages/index/index', text: '首页'
         }, {
             pagePath: 'pages/components/index', text: '组件示例'
+        }, {
+            pagePath: 'pages/blog/index', text: '博客'
+        }, {
+            pagePath: 'pages/about/index', text: '关于我们'
         }]
     },
     "embeddedAppIdList": ["wx4167e8a57f6fb735", "wx7fc7c62a93b1b191"]
