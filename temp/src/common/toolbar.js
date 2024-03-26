@@ -13,6 +13,16 @@ const toolbar = [{
         <Icon type="tabzhiwei-moren" className={classnames('iconfont')}/>,
     title: '组件示例',
     pagePath: '/pages/components/index'
+}, {
+    key: '/pages/blog/index',
+    icon: <Icon type="pengyouquan" className={classnames('iconfont')}/>,
+    title: '博客',
+    pagePath: '/pages/blog/index'
+}, {
+    key: '/pages/about/index',
+    icon: <Icon type="jiaoyujingli" className={classnames('iconfont')}/>,
+    title: '关于我们',
+    pagePath: '/pages/about/index'
 }];
 
 export default toolbar;
